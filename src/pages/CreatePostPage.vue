@@ -46,7 +46,6 @@ export default {
     methods: {
         ...mapActions(['createPost']),
         createPost() {
-            console.log('ku');
             if(this.userName.trim()) {
                 const post = {
                     id: Date.now(),

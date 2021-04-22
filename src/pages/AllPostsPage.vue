@@ -36,7 +36,6 @@ export default {
         ...mapActions(['deletePost']),
         del(id) {
             this.deletePost(id)
-            this.$store.dispatch("fetchPosts")
 
         }
     }

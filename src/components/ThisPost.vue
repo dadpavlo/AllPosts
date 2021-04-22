@@ -11,7 +11,7 @@
             </div>
             <div class="header__edit">
                 <div class="edit">
-                    <img src="../assets/edit.svg" class="cursor">
+                    <img src="../assets/edit.svg" class="cursor" @click="$router.push({name: 'editPost', params: {id: post.id}})">
                 </div>
                 <div class="delete">
                     <img src="../assets/delete.svg" class="cursor" @click="deletePost">
@@ -30,6 +30,7 @@ export default {
     name: 'ThisPosts',
     props: {
         post: {
+            
         }
     },
     methods: {

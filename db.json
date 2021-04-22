@@ -1,10 +1,28 @@
 {
   "posts": [
     {
-      "id": 1619075016723,
-      "user": "ert",
-      "title": "reter",
-      "body": "teterter"
+      "id": 1619125563495,
+      "user": "nika",
+      "title": "ITS MY FIRST COM ON THIS SITE",
+      "body": "hi!"
+    },
+    {
+      "id": 1619127441688,
+      "user": "nika",
+      "title": "its work!",
+      "body": "hi mom!"
+    },
+    {
+      "id": 1619127445475,
+      "user": "misha",
+      "title": "wow",
+      "body": "how are u?\n"
+    },
+    {
+      "id": 1619127857256,
+      "user": "Ira",
+      "title": "testing posts",
+      "body": "wooow"
     }
   ]
 }
