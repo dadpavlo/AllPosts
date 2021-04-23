@@ -5,6 +5,7 @@ import PostsLayout from '../pages/PostsLayout.vue'
 import AllPostsPage from '../pages/AllPostsPage.vue'
 import CreatePostPage from '../pages/CreatePostPage.vue'
 import EditPost from '../pages/EditPost.vue'
+import PostPage from '../pages/PostPage.vue'
 
 Vue.use(Router)
 
@@ -34,6 +35,12 @@ export default new Router({
                     path: '/editPost:id',
                     name: 'editPost',
                     component: EditPost
+                },
+                {
+                    path: '/:id',
+                    name: 'post',
+                    component: PostPage
+
                 }
             ]
         }

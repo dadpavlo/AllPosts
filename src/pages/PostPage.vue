@@ -1,69 +1,118 @@
 <template>
-    <div class="createPostForm">
-        <div class="create__post">
-            <h1>Create new post!</h1>
-            <div class="post__header" >
-                <div class="header__user">
-                    <div class="post__user__photo">
-                        <img src="../assets/account.svg">
-                    </div>
-                    <div class="post__user__name">
-                        <input type="text" class="post__user__name"  placeholder = "Your name" v-model="userName">
-                    </div>
-                </div>
+    <div class="post__page">
+        <div class="post">
+            <post
+            :post = 'thisPost'
+            />
+            <comment
+            v-for = "comment in commentsOfPost" :key = "comment.id"
+            :comment = "comment"
+            @del = 'del'
+            />
+            <h3>Create new comment!</h3>
+            <div class="form__comment">
+                <textarea class="new__comment" rows="5" v-model="commentBody"></textarea>
+                <button @click="newComment">OK</button>
             </div>
-            <div class="post__user__title">
-                <input type="text" class="post__user__title" placeholder = "Post title" v-model="title">
-            </div>
-            <textarea cols="30" rows="10" class="post__user__body" placeholder = "Write something here!" v-model="body"></textarea>
-            <div class="button" @click="createPost(), $router.push({name: 'posts'})" >
-                <button>OK</button>
-            </div>
-        </div > 
+        </div>
+
     </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
-
+import { mapGetters, mapActions } from "vuex";
+import post from '../components/ThisPost.vue'
+import comment from '../components/Comment.vue'
 export default {
     name: 'ThisPosts',
-    props: {
-        post: {
-            type: Object
-        },
+    // props: {
+    //     post: {
+    //         type: Object
+    //     },
+    // },
+    components: {
+        post,
+        comment
+    },
+    data() {
+        return {
+            commentBody: ""
+        }
+    },
+    computed: {
+        ...mapGetters(['thisPost', 'commentsOfPost'])
+    },
+    async mounted() {
+        
+        this.$store.dispatch("getPost", this.$route.params.id)
+        this.$store.dispatch("Comments")
+        this.$store.dispatch("getComments", this.$route.params.id)
     },
     methods: {
-        ...mapActions(['createPost']),
-        createPost() {
-            if(this.userName.trim()) {
-                const post = {
+        ...mapActions(['getPost']),
+        newComment() {
+            if(this.commentBody.trim()) {
+                const comment = {
                     id: Date.now(),
-                    user: this.userName,
-                    title: this.title,
-                    body: this.body
+                    postId: parseInt(this.$route.params.id),
+                    body: this.commentBody
                 }
-                this.$store.dispatch("createPost", post);
+                this.$store.dispatch("createComment", comment);
             }
+        },
+        del(id) {
+            this.$store.dispatch("deleteComment", id);
         }
     }
 }
 </script>
 
 <style scoped>
+h3 {
+    align-self: start;
+}
+button {
+    height: 30px;
+    align-self:flex-end;
+    margin: 20px;
+
+}
+.new__comment {
+    flex-grow: 1;
+    font-family: 'Source Code Pro', monospace;
+    color: #ffffff;
+    background-color: rgb(73, 73, 73);
+    padding: 10px;
+    outline: none;
+    border: none;
+    border-radius: 15px;
+}
+.form__comment {
+    flex-direction: column;
+    min-height: 50px;
+    min-width: 100%;
+    display: flex;
+}
+.post {
+    display: flex;
+    flex-direction: column;
+    
+
+}
 .create__post {
     display: flex;
     flex-direction: column;
 }
 
-.createPostForm {
-    height: 100vh;
+.post__page {
+    padding: 80px;
+    min-height: 100vh;
     background-color: rgb(37, 37, 37);
     align-items: center;
     display: flex;
     flex-direction: column;
     text-align: center;
-    justify-content: center;
+    justify-content:center;
     color: rgb(255, 255, 255);
 }
 

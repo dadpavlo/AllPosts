@@ -9,22 +9,37 @@
                     <p>{{post.user}}</p>
                 </div>
             </div>
+            <div class="header__edit">
+                <div class="edit">
+                    <img src="../assets/edit.svg" class="cursor" @click="$router.push({name: 'editPost', params: {id: post.id}})">
+                </div>
+                <div class="delete">
+                    <img src="../assets/delete.svg" class="cursor" @click="deletePost">
+                </div>
+            </div>
         </div>
         <hr>
-        <h2>{{post.title}}</h2>
-        <p class="post__body">{{post.body}}</p>
+        <div @click="$router.push({name: 'post', params: {id: post.id}})">
+            <h2>{{post.title}}</h2>
+            <p class="post__body">{{post.body}}</p>
+        </div>
     </div>
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
     name: 'ThisPosts',
     props: {
         post: {
-            type: Object
+            
         }
     },
     methods: {
+        ...mapActions(['deletePost']),
+        deletePost() {
+            this.$emit('del', this.post.id)
+        }
     }
 }
 </script>
@@ -41,6 +56,9 @@ export default {
 }
 .post__body{
     padding: 10px;
+}
+.post:hover {
+    background-color: rgb(47, 47, 47);
 }
 .header__user {
     cursor: pointer;

@@ -47,7 +47,7 @@ export default ({
             for (let i = 0; i < state.posts.length; i++) {
                 if (state.posts[i].id == postId)
                 commit("getPost", state.posts[i])
-                // state.thisPost = []
+
             }
         },
         async updatePost(_ , post) {
@@ -65,11 +65,63 @@ export default ({
                 },            
             )
             
-        }
+        },
+        async Comments({commit}) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .get('http://localhost:3000/comments')
+                    .then(response => {
+                        commit("updateComments", response.data);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+                }
+            )
+        },
+        async getComments({commit, state}, id) {
+            state.thisComments = []
+            for (let i = 0; i < state.comments.length; i++) {
+                if (state.comments[i].postId == id)
+                commit("getComments", state.comments[i])
+
+            }
+        },
+        async createComment({commit}, data) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .post('http://localhost:3000/comments/', data)
+                    .then(response => {
+                        commit("createComment", data);
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+                },            
+            )
+        },
+        async deleteComment({commit}, id) {
+            return new Promise((resolve, reject) => {
+                axios
+                    .delete('http://localhost:3000/comments/' + id)
+                    .then(response => {
+                        commit("deletePost", id)
+                        resolve(response);
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+                },
+            )
+            }, 
     },
     state: {
         posts: [],
-        thisPost: []
+        thisPost: [],
+        comments: [],
+        thisComments: []
     },
     mutations: {
         updatePosts(state, posts) {
@@ -83,7 +135,21 @@ export default ({
         },
         getPost(state, post) {
             state.thisPost = post
+        },
+        updateComments(state, comments) {
+            state.comments = comments
+        },
+        getComments(state, comment) {
+            state.thisComments.push(comment)
+        },
+        createComment(state, comment) {
+            state.comments.push(comment)
+            this.dispatch("getComments", comment.postId)
+        },
+        deleteComment(state, id) {
+            state.comments = state.comments.filter(t => t.id !== id);
         }
+
     },
     getters: {
         allPosts(state) {
@@ -91,6 +157,12 @@ export default ({
         },
         thisPost(state) {
             return state.thisPost
+        },
+        // getComments(state) {
+        //     return state.comments
+        // },
+        commentsOfPost(state) {
+            return state.thisComments
         }
     
     }

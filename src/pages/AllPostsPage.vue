@@ -6,7 +6,7 @@
                 <img class="add__post" src="../assets/add.svg" @click="$router.push({name: 'createPost'})">
             </div>
         </div>
-        <this-posts
+        <post-item
         v-for = "post in allPosts" :key = "post.id"
         :post = "post"
         @del = "del"
@@ -15,13 +15,13 @@
 </template>
 
 <script>
-import ThisPosts from '../components/ThisPost'
+import PostItem from '../components/PostItem'
 import { mapGetters, mapActions, mapState } from "vuex";
 
 export default {
     name: 'AllPosts',
     components: {
-        ThisPosts
+        PostItem
     },
     computed: {
         ...mapState({

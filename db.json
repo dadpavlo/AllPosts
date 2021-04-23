@@ -7,22 +7,37 @@
       "body": "hi!"
     },
     {
-      "id": 1619127441688,
-      "user": "nika",
-      "title": "its work!",
-      "body": "hi mom!"
-    },
-    {
       "id": 1619127445475,
       "user": "misha",
       "title": "wow",
       "body": "how are u?\n"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1619138902077,
+      "postId": 1619125563495,
+      "body": "hi\n"
     },
     {
-      "id": 1619127857256,
-      "user": "Ira",
-      "title": "testing posts",
-      "body": "wooow"
+      "id": 1619139494831,
+      "postId": 1619127445475,
+      "body": "hi"
+    },
+    {
+      "id": 1619139920987,
+      "postId": 1619127445475,
+      "body": "???"
+    },
+    {
+      "id": 1619140049177,
+      "postId": 1619125563495,
+      "body": "???"
+    },
+    {
+      "id": 1619140087531,
+      "postId": 1619127445475,
+      "body": "how are u?"
     }
   ]
 }
