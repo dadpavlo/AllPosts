@@ -25,11 +25,6 @@ import post from '../components/ThisPost.vue'
 import comment from '../components/Comment.vue'
 export default {
     name: 'ThisPosts',
-    // props: {
-    //     post: {
-    //         type: Object
-    //     },
-    // },
     components: {
         post,
         comment
@@ -57,11 +52,16 @@ export default {
                     postId: parseInt(this.$route.params.id),
                     body: this.commentBody
                 }
-                this.$store.dispatch("createComment", comment);
+                this.$store.dispatch("createComment", comment)
             }
         },
         del(id) {
-            this.$store.dispatch("deleteComment", id);
+            console.log(parseInt(this.$route.params.id));
+            const comment = {
+                id: id,
+                postId: parseInt(this.$route.params.id)
+            }
+            this.$store.dispatch("deleteComment", comment);
         }
     }
 }

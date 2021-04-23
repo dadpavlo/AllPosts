@@ -102,12 +102,14 @@ export default ({
                 },            
             )
         },
-        async deleteComment({commit}, id) {
+        async deleteComment({commit}, comment) {
+            console.log('&&&', comment.postId);
             return new Promise((resolve, reject) => {
                 axios
-                    .delete('http://localhost:3000/comments/' + id)
+                    .delete('http://localhost:3000/comments/' + comment.id)
                     .then(response => {
-                        commit("deletePost", id)
+                        console.log('post1', comment.postId);
+                        commit("deleteComment", comment)
                         resolve(response);
                     })
                     .catch(error => {
@@ -146,9 +148,11 @@ export default ({
             state.comments.push(comment)
             this.dispatch("getComments", comment.postId)
         },
-        deleteComment(state, id) {
-            state.comments = state.comments.filter(t => t.id !== id);
-        }
+        deleteComment(state, comment) {
+            console.log('postid', comment.postId);
+            state.comments = state.comments.filter(t => t.id !== comment.id);
+            this.dispatch("getComments", comment.postId)
+        },
 
     },
     getters: {
