@@ -42,7 +42,7 @@ export default {
         ...mapGetters(['thisPost'])
     },
     async mounted() {
-        this.$store.dispatch("getPost", this.$route.params.id)
+        await this.$store.dispatch("getPost", this.$route.params.id)
         this.userName = this.thisPost.user
         this.title = this.thisPost.title
         this.body = this.thisPost.body

@@ -17,7 +17,9 @@
             <button @click="prevPage">
                 <img src="../assets/arrow_back_ios_new_black_24dp.svg" >
             </button>
-            <p>{{pageNumber+1}}</p>
+            <p v-if="thisRevPage" >{{pageNumber-1}}/</p>
+            <p class="thisPage">{{pageNumber+1}}/</p>
+            <p>{{pageNumber+2}}</p>
             <button @click="nextPage">
                 <img src="../assets/arrow_forward_ios_black_24dp.svg" >
 
@@ -38,6 +40,7 @@ export default {
     data() {
         return {
             pageNumber: 0,
+            thisRevPage: false
         }
     },
     computed: {
@@ -45,20 +48,19 @@ export default {
         paginatedData(){
             const start = this.pageNumber * this.size,
             end = start + this.size;
-
-            console.log(start);
-            console.log(end);
             return this.allPosts.slice(start, end);
         },
         pageCount(){
             let l = this.allPosts.length,
             s = this.size;
+
             return Math.ceil(l/s);
-        }
+        },
     },
     async mounted() {
         console.log(this.paginatedData);
         this.$store.dispatch("fetchPosts")
+        this.thisPage()
     },
     methods: {
         ...mapActions(['deletePost']),
@@ -71,6 +73,12 @@ export default {
         },
         prevPage(){
             this.pageNumber--;
+        },
+        thisPage() {
+            if (this.pageNumber) {
+                this.thisRevPage = true
+            }
+
         }
     }, 
     props:{
