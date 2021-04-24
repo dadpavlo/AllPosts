@@ -11,8 +11,16 @@
         :post = "post"
         @del = "del"
         />
-        <button @click="prevPage">///</button>
-        <button @click="nextPage">Next</button>
+        <div class="pagination">
+            <button @click="prevPage">
+                <img src="../assets/arrow_back_ios_new_black_24dp.svg" >
+            </button>
+            <p>{{pageNumber+1}}</p>
+            <button @click="nextPage">
+                <img src="../assets/arrow_forward_ios_black_24dp.svg" >
+
+            </button>
+        </div>
     </div>
 </template>
 
@@ -74,6 +82,14 @@ export default {
 </script>
 
 <style scoped>
+.pagination {
+    display: flex;
+    text-align: center;
+
+}
+.pagination button {
+    margin: 10px;
+}
 .posts {
     max-height: 100%;
     min-height: 100vh;
