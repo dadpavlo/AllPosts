@@ -1,16 +1,18 @@
 <template>
-    <div class="posts">
+    <div class="allposts">
         <div class="posts__header">
             <h2>Create new post</h2>
             <div class="posts__header__add__post">
                 <img class="add__post" src="../assets/add.svg" @click="$router.push({name: 'createPost'})">
             </div>
         </div>
-        <post-item
-        v-for = "post in paginatedData" :key = "post.id"
-        :post = "post"
-        @del = "del"
-        />
+        <div class="post">
+            <post-item
+            v-for = "post in paginatedData" :key = "post.id"
+            :post = "post"
+            @del = "del"
+            />
+        </div>
         <div class="pagination">
             <button @click="prevPage">
                 <img src="../assets/arrow_back_ios_new_black_24dp.svg" >
@@ -82,6 +84,11 @@ export default {
 </script>
 
 <style scoped>
+.post {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+}
 button {
     text-align: center;
     color: rgba(52, 52, 52, 1);
@@ -102,7 +109,8 @@ button {
 .pagination button {
     margin: 10px;
 }
-.posts {
+.allposts {
+    min-width: 700px;
     max-height: 100%;
     min-height: 100vh;
     background-color: rgb(37, 37, 37);

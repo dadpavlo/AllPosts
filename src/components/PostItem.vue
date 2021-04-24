@@ -55,7 +55,7 @@ export default {
     border-radius: 5px;
     margin-bottom: 1rem;
     min-width: 700px;
-    max-width: 800px;
+    flex-grow: 1;
 }
 .post__body{
     padding: 10px;
