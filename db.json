@@ -7,11 +7,32 @@
       "body": "hi!"
     },
     {
-      "id": 1619127445475,
-      "user": "misha",
-      "title": "wow",
-      "body": "how are u?\n"
+      "id": 1619253740384,
+      "user": "Mom",
+      "title": "!!!",
+      "body": "WOW"
     }
   ],
-  "comments": []
+  "comments": [
+    {
+      "id": 1619212691334,
+      "postId": 1619125563495,
+      "body": "sdf"
+    },
+    {
+      "id": 1619253345841,
+      "postId": 1619125563495,
+      "body": "ku\n"
+    },
+    {
+      "id": 1619254770239,
+      "postId": 1619253740384,
+      "body": "yey"
+    },
+    {
+      "id": 1619256781618,
+      "postId": 1619253740384,
+      "body": "cool!"
+    }
+  ]
 }

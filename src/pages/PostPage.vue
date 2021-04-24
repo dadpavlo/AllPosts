@@ -1,11 +1,11 @@
 <template>
     <div class="post__page">
-        <div class="post">
+        <div class="post" v-if="loading">
             <post
             :post = 'thisPost'
             />
             <comment
-            v-for = "comment in commentsOfPost" :key = "comment.id"
+            v-for = "comment in getComments" :key = "comment.id"
             :comment = "comment"
             @del = 'del'
             />
@@ -31,17 +31,21 @@ export default {
     },
     data() {
         return {
-            commentBody: ""
+            commentBody: "",
+            loading: false
         }
     },
     computed: {
-        ...mapGetters(['thisPost', 'commentsOfPost'])
+        ...mapGetters(['thisPost', 'getComments']),
+        postId(){
+            return this.$route.params.id
+        }
+    },
+    created() {
+        this.load()
     },
     async mounted() {
-        
-        this.$store.dispatch("getPost", this.$route.params.id)
-        this.$store.dispatch("Comments")
-        this.$store.dispatch("getComments", this.$route.params.id)
+        // this.$store.dispatch("getCommentsOfThisPost", this.$route.params.id)
     },
     methods: {
         ...mapActions(['getPost']),
@@ -62,6 +66,14 @@ export default {
                 postId: parseInt(this.$route.params.id)
             }
             this.$store.dispatch("deleteComment", comment);
+        },
+        async load() {
+            console.log('this.loading', this.loading);
+            await this.$store.dispatch("fetchPosts")
+            await this.$store.dispatch("getPost", this.postId)
+            await this.$store.dispatch("getComments", this.postId)
+            this.loading = true
+            console.log('this.loading', this.loading);
         }
     }
 }

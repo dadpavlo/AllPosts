@@ -7,29 +7,49 @@
             </div>
         </div>
         <post-item
-        v-for = "post in allPosts" :key = "post.id"
+        v-for = "post in paginatedData" :key = "post.id"
         :post = "post"
         @del = "del"
         />
+        <button @click="prevPage">///</button>
+        <button @click="nextPage">Next</button>
     </div>
 </template>
 
 <script>
 import PostItem from '../components/PostItem'
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     name: 'AllPosts',
     components: {
         PostItem
     },
+    data() {
+        return {
+            pageNumber: 0,
+            size:{
+                type:Number,
+                required:false,
+                default: 5
+            }
+        }
+    },
     computed: {
-        ...mapState({
-            posts: state => state.posts.posts
-        }),
-        ...mapGetters(["allPosts"])
+        ...mapGetters(["allPosts"]),
+        paginatedData(){
+            const start = this.pageNumber * this.size,
+            end = start + this.size;
+            return this.allPosts.slice(start, end);
+        },
+        pageCount(){
+            let l = this.allPosts.length,
+            s = this.size;
+            return Math.ceil(l/s);
+        }
     },
     async mounted() {
+        console.log(this.paginatedData);
         this.$store.dispatch("fetchPosts")
     },
     methods: {
@@ -37,8 +57,14 @@ export default {
         del(id) {
             this.deletePost(id)
 
+        },
+        nextPage(){
+         this.pageNumber++;
+        },
+        prevPage(){
+            this.pageNumber--;
         }
-    }
+    }, 
 }
 </script>
 

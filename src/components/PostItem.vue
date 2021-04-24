@@ -19,7 +19,7 @@
             </div>
         </div>
         <hr>
-        <div @click="$router.push({name: 'post', params: {id: post.id}})">
+        <div class="body" @click="$router.push({name: 'post', params: {id: post.id}})">
             <h2>{{post.title}}</h2>
             <p class="post__body">{{post.body}}</p>
         </div>
@@ -45,6 +45,9 @@ export default {
 </script>
 
 <style scoped>
+.body {
+    cursor: pointer;
+}
 .post {
     transition-duration: 100ms;
     border: 1px solid #ccc;

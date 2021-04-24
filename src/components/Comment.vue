@@ -27,6 +27,9 @@ export default {
 </script>
 
 <style scoped>
+.cursor{
+    cursor: pointer;
+}
 .delete {
     margin-right: 10px;
 }

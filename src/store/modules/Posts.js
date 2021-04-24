@@ -43,12 +43,20 @@ export default ({
             },
         )
         },
-        async getPost({commit, state}, postId) {
-            for (let i = 0; i < state.posts.length; i++) {
-                if (state.posts[i].id == postId)
-                commit("getPost", state.posts[i])
-
-            }
+        async getPost({commit}, postId) {
+            console.log('hello');
+            return new Promise((resolve, reject) => {
+                axios
+                .get('http://localhost:3000/posts/' + postId)
+                .then(response => {
+                    commit("getPost", response.data)
+                    resolve(response);
+                })
+                .catch(error => {
+                    reject(error);
+                });
+                },      
+            )
         },
         async updatePost(_ , post) {
             console.log(post.id);
@@ -66,12 +74,15 @@ export default ({
             )
             
         },
-        async Comments({commit}) {
+        async getComments({commit}, postId) {
+            console.log(postId);
             return new Promise((resolve, reject) => {
                 axios
-                    .get('http://localhost:3000/comments')
+                    .get('http://localhost:3000/comments/')
                     .then(response => {
+                        console.log('???');
                         commit("updateComments", response.data);
+                        commit("getCommentsOfThisPost", postId)
                         resolve(response);
                     })
                     .catch(error => {
@@ -80,14 +91,22 @@ export default ({
                 }
             )
         },
-        async getComments({commit, state}, id) {
-            state.thisComments = []
-            for (let i = 0; i < state.comments.length; i++) {
-                if (state.comments[i].postId == id)
-                commit("getComments", state.comments[i])
+        // async getCommentsOfThisPost({commit}, id) {
+        //     console.log('hi');
+        //     return new Promise((resolve, reject) => {
+        //         axios
+        //         .get('http://localhost:3000/comments/' + id)
+        //         .then(response => {
 
-            }
-        },
+        //             commit("getCommentsOfThisPost", response.data)
+        //             resolve(response);
+        //         })
+        //         .catch(error => {
+        //             reject(error);
+        //         });
+        //         },      
+        //     )
+        // },
         async createComment({commit}, data) {
             return new Promise((resolve, reject) => {
                 axios
@@ -123,7 +142,7 @@ export default ({
         posts: [],
         thisPost: [],
         comments: [],
-        thisComments: []
+        getCommentsOfThisPost: []
     },
     mutations: {
         updatePosts(state, posts) {
@@ -141,8 +160,16 @@ export default ({
         updateComments(state, comments) {
             state.comments = comments
         },
-        getComments(state, comment) {
-            state.thisComments.push(comment)
+        getCommentsOfThisPost(state, id) {
+            state.getCommentsOfThisPost = []
+            for (let i = 0; i < state.comments.length; i++) {
+                if(state.comments[i].postId == id) {
+                    state.getCommentsOfThisPost.push(state.comments[i])
+                    console.log(state.comments[i]);
+                }
+            }
+            state.comments = state.getCommentsOfThisPost
+            console.log(state.comments);
         },
         createComment(state, comment) {
             state.comments.push(comment)
@@ -165,8 +192,8 @@ export default ({
         // getComments(state) {
         //     return state.comments
         // },
-        commentsOfPost(state) {
-            return state.thisComments
+        getComments(state) {
+            return state.getCommentsOfThisPost
         }
     
     }
