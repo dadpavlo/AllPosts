@@ -75,13 +75,25 @@ export default {
         size:{
           type:Number,
           required:false,
-          default: 10
+          default: 5
         }
     }
 }
 </script>
 
 <style scoped>
+button {
+    text-align: center;
+    color: rgba(52, 52, 52, 1);
+    transition-duration: 200ms;
+    cursor: pointer;
+    font-family: 'Source Code Pro', monospace;
+    background: #FFFFFF;
+    box-shadow: 5px 10px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    border: none;
+    outline: none;
+}
 .pagination {
     display: flex;
     text-align: center;
