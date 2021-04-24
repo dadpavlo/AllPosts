@@ -28,11 +28,6 @@ export default {
     data() {
         return {
             pageNumber: 0,
-            size:{
-                type:Number,
-                required:false,
-                default: 5
-            }
         }
     },
     computed: {
@@ -40,6 +35,9 @@ export default {
         paginatedData(){
             const start = this.pageNumber * this.size,
             end = start + this.size;
+
+            console.log(start);
+            console.log(end);
             return this.allPosts.slice(start, end);
         },
         pageCount(){
@@ -65,6 +63,13 @@ export default {
             this.pageNumber--;
         }
     }, 
+    props:{
+        size:{
+          type:Number,
+          required:false,
+          default: 10
+        }
+    }
 }
 </script>
 

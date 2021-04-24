@@ -196,5 +196,5 @@ export default ({
             return state.getCommentsOfThisPost
         }
     
-    }
+    },
 })
